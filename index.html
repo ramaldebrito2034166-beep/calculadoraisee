@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Simulador ISEE e ISPE - Academitaly</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="card" aria-label="Simulador ISEE e ISPE">
+        <header class="brand">
+          <div class="brand__logo" aria-label="Academitaly">
+            <img
+              src="https://i.ibb.co/7JrDkjmz/Academ-Italy-logo-branci.png"
+              alt="Academitaly"
+              loading="eager"
+              decoding="async"
+              onerror="this.remove(); document.getElementById('logo-fallback').style.display='block';"
+            />
+            <div id="logo-fallback" class="brand__fallback" style="display: none">
+              ACADEMITALY
+            </div>
+          </div>
+        </header>
+
+        <h1 class="title">Simule seu ISEE e seu ISPE</h1>
+        <p class="subtitle">
+          Use valores do Imposto de Renda (ano-base do edital) já convertidos para euro. Esta é
+          uma simulação.
+        </p>
+
+        <form id="sim-form" class="form" novalidate>
+          <div id="form-error" class="formError" role="alert" aria-live="polite"></div>
+
+          <div class="field">
+            <label class="label" for="membros">Número de membros do núcleo familiar</label>
+            <input
+              class="input"
+              id="membros"
+              name="membros"
+              type="number"
+              inputmode="numeric"
+              min="1"
+              max="10"
+              step="1"
+              required
+              autocomplete="off"
+              placeholder="Ex.: 3"
+            />
+            <p class="help">
+              Conte todas as pessoas que compõem seu núcleo familiar conforme regras da bolsa.
+            </p>
+            <div class="fieldError" id="membros-error" aria-live="polite"></div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="renda">Renda anual total do núcleo familiar (EUR)</label>
+            <input
+              class="input"
+              id="renda"
+              name="renda"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="0.01"
+              required
+              autocomplete="off"
+              placeholder="Ex.: 18000"
+            />
+            <p class="help">
+              Some a renda de todos do núcleo no Imposto de Renda. Não divida por pessoa. Use o
+              ano-base do edital e já converta para euro.
+            </p>
+            <div class="fieldError" id="renda-error" aria-live="polite"></div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="patrimonio">
+              Patrimônio móvel total do núcleo familiar (EUR)
+            </label>
+            <input
+              class="input"
+              id="patrimonio"
+              name="patrimonio"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="0.01"
+              required
+              autocomplete="off"
+              placeholder="Ex.: 2500"
+            />
+            <p class="help">
+              Use o total de bens móveis conforme Imposto de Renda do núcleo (saldo, poupança,
+              investimentos), já em euro.
+            </p>
+            <div class="fieldError" id="patrimonio-error" aria-live="polite"></div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="metragem">Metragem total de imóveis do núcleo familiar (m²)</label>
+            <input
+              class="input"
+              id="metragem"
+              name="metragem"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="0.01"
+              required
+              autocomplete="off"
+              placeholder="Ex.: 80"
+            />
+            <p class="help">
+              Some a metragem de todos os imóveis do núcleo. Se não tiver, coloque 0.
+            </p>
+            <div class="fieldError" id="metragem-error" aria-live="polite"></div>
+          </div>
+
+          <div class="actions">
+            <button id="btn-calcular" class="btn btn--primary" type="submit">Calcular</button>
+            <div class="actions__row">
+              <button id="btn-copiar" class="btn btn--secondary" type="button" disabled>
+                Copiar resultado
+              </button>
+              <button id="btn-limpar" class="btn btn--ghost" type="button">Limpar</button>
+            </div>
+            <div id="copy-status" class="copyStatus" role="status" aria-live="polite"></div>
+          </div>
+        </form>
+
+        <section id="resultado" class="result" aria-live="polite" hidden>
+          <h2 class="result__title">Resultado da simulação</h2>
+
+          <div class="result__grid">
+            <div class="result__line">
+              <span class="result__label">Scala di equivalenza usada:</span>
+              <span class="result__value" id="out-scala">-</span>
+            </div>
+            <div class="result__line">
+              <span class="result__label">Valor patrimonial do imóvel (exterior):</span>
+              <span class="result__value" id="out-imovel">-</span>
+            </div>
+            <div class="result__line">
+              <span class="result__label">ISE (base):</span>
+              <span class="result__value" id="out-ise">-</span>
+            </div>
+            <div class="result__line">
+              <span class="result__label">ISEE estimado:</span>
+              <span class="result__value" id="out-isee">-</span>
+            </div>
+            <div class="result__line">
+              <span class="result__label">ISPE estimado:</span>
+              <span class="result__value" id="out-ispe">-</span>
+            </div>
+          </div>
+
+          <div class="result__details" id="out-details"></div>
+
+          <div class="disclaimer" role="note">
+            <strong>Simulação aproximada.</strong> Não substitui o ISEE oficial feito via CAF/órgão
+            regional e pode variar conforme edital, região e documentação. Use apenas para ter uma
+            noção de faixa e sempre confira as regras do edital do seu ano.
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
